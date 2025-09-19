@@ -36,11 +36,11 @@ class LoginPage:
         self.locator_password.fill(password)
 
     # 点击注册按钮
-    def click_register(self):
+    def click_register_btn(self):
         self.locator_registerBtn.click()
 
     # 点击登录按钮
-    def click_login(self):
+    def click_login_btn(self):
         self.locator_loginBtn.click()
 
     # 登录操作
