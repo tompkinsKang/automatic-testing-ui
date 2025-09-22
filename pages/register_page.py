@@ -25,7 +25,7 @@ class RegisterPage:
 
     # 注册页导航
     def navigate(self):
-        self.page.goto("http://47.116.12.183/register.html")
+        self.page.goto("/register.html")
 
     # 输入用户名
     def fill_username(self,username):

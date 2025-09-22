@@ -6,7 +6,7 @@ class TestLogin:
 
     # 登录用例执行前置后置
     @pytest.fixture(autouse=True,scope="function")
-    def start_login_case(self,page):
+    def start_login_cases(self,page):
         print("登陆用例的前置，打开新的登录页")
         self.login = LoginPage(page)
         self.login.navigate()
@@ -57,11 +57,11 @@ class TestLogin:
         #     self.login.click_login_btn()
         #
         # # 1、判断url和title
-        # expect(self.login.page).to_have_url("http://47.116.12.183/index.html")
+        # expect(self.login.page).to_have_url("/index.html")
         # expect(self.login.page).to_have_title("首页")
 
         # 3、Ajax方式，断言返回状态码和返回值
-        with self.login.page.expect_response("http://47.116.12.183/api/login") as res:
+        with self.login.page.expect_response("/api/login") as res:
             self.login.click_login_btn()
         assert res.value.status == 200
         assert res.value.ok
@@ -92,5 +92,5 @@ class TestLogin:
             self.login.click_register_btn()
         #     expect(self.login.locator_register_btn).to_have_attribute("href","register.html")
         expect(self.login.page).to_have_title("注册")
-        expect(self.login.page).to_have_url("http://47.116.12.183/register.html")
+        expect(self.login.page).to_have_url("/register.html")
 

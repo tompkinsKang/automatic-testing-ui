@@ -52,11 +52,11 @@ class TestRegister:
         with self.register.page.expect_navigation(url="**/index.html"):
             self.register.click_register_btn()
         print("\n断言url和title")
-        expect(self.register.page).to_have_url("http://47.116.12.183/index.html")
+        expect(self.register.page).to_have_url("/index.html")
         expect(self.register.page).to_have_title("首页")
 
         # # 3、Ajax方式，断言返回状态码和返回值
-        # with self.register.page.expect_response("http://47.116.12.183/api/register") as res:
+        # with self.register.page.expect_response("/api/register") as res:
         #     self.register.click_register_btn()
         # assert res.value.status == 200
         # assert res.value.ok

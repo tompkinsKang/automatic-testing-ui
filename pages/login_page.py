@@ -25,7 +25,7 @@ class LoginPage:
 
     # 登录页导航
     def navigate(self):
-        self.page.goto("http://47.116.12.183/login.html")
+        self.page.goto("login.html")
 
     # 输入用户名
     def fill_username(self,username):
