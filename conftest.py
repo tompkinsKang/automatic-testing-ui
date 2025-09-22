@@ -1,8 +1,6 @@
 import pytest
 from playwright.sync_api import sync_playwright
-
 from pages.login_page import LoginPage
-
 
 # conftest 为 pytest 提供配置和环境的文件，可以在其中定义夹具（fixtures）来管理测试的前置和后置条件
 @pytest.fixture(scope="session")
@@ -22,17 +20,17 @@ def page(browser):
     context.close()
 
 #全局登录并且保存Cookies
-@pytest.fixture(scope="session",autouse=True)
+@pytest.fixture(scope="session")
 def login_save(browser,pytestconfig):
+    print("全局登录，并且保存cookies")
     context = browser.new_context(base_url="http://47.116.12.183")
     page = context.new_page()
-
     LoginPage(page).navigate()
-    LoginPage(page).fillLogin("llh","admin123")
+    LoginPage(page).fillLogin("llh", "admin123")
     LoginPage(page).click_login_btn()
-    #等待登录成功后重定向
+    # 等待登录成功后重定向
     page.wait_for_url(url="**/index.html")
-    #保存storage state 到文件
+    # 保存storage state 到文件
     storage_path = pytestconfig.rootpath.joinpath("auth/state.json")
     context.storage_state(path=storage_path)
     context.close()
@@ -49,13 +47,3 @@ def browser_context_args(browser_context_args, playwright, pytestconfig):
  "storage_state":pytestconfig.rootpath.joinpath("auth/state.json"),
  **browser_context_args,
  }
-
-# 定义一个自定义的pytest标记，让登录和注册页面不执行自动登录
-def pytest_configure(config):
-    config.addinivalue_line("markers","nologin: mark test to not use login")
-
-@pytest.fixture(scope="function",autouse=True)
-def isLogged(request,page:LoginPage):
-    if 'nologin' in request.keywords:
-        print("nologin")
-        return page

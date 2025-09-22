@@ -1,9 +1,7 @@
 from pages.login_page import LoginPage
 from playwright.sync_api import expect
-import allure
 import pytest
 
-@pytest.mark.nologin
 class TestLogin:
 
     # 登录用例执行前置后置
