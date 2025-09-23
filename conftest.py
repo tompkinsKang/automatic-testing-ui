@@ -1,5 +1,7 @@
 import pytest
 from pages.login_page import LoginPage
+from pytest import Item
+import allure
 
 #全局登录并且保存Cookies
 @pytest.fixture(scope="session")
@@ -14,7 +16,7 @@ def login_save(browser,pytestconfig):
     page.wait_for_url(url="**/index.html")
     # 保存storage state 到文件
     storage_path = pytestconfig.rootpath.joinpath("auth/state.json")
-    context.storage_state(path=storage_path)
+    context.storage_state(path=str(storage_path))
     context.close()
 
 @pytest.fixture(scope="session")
@@ -29,3 +31,11 @@ def browser_context_args(browser_context_args, playwright, pytestconfig):
  "storage_state":pytestconfig.rootpath.joinpath("auth/state.json"),
  **browser_context_args,
  }
+
+def pytest_runtest_call(item: Item):
+    # 动态添加测试类的allure.feature()
+    if item.parent._obj.__doc__:
+        allure.dynamic.feature(item.parent._obj.__doc__)
+    # 动态添加测试用例的title标题allure.title()
+    if item.function.__doc__:
+        allure.dynamic.title(item.function.__doc__)

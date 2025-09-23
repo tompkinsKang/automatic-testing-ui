@@ -1,3 +1,4 @@
+import allure
 from playwright.sync_api import Page
 
 class RegisterPage:
@@ -25,27 +26,33 @@ class RegisterPage:
 
     # 注册页导航
     def navigate(self):
-        self.page.goto("/register.html")
+        with allure.step("导航到注册页"):
+            self.page.goto("/register.html")
 
     # 输入用户名
     def fill_username(self,username):
-        self.locator_username.fill(username)
+        with allure.step(f"输入用户名:{username}"):
+            self.locator_username.fill(username)
 
     # 输入密码
     def fill_password(self,password):
-        self.locator_password.fill(password)
+        with allure.step(f"输入密码:{password}"):
+            self.locator_password.fill(password)
 
-    # 点击已有账号，登录按钮
+    # 点击登录按钮
     def click_login_btn(self):
-        self.locator_loginBtn.click()
+        with allure.step("点击登录按钮"):
+            self.locator_loginBtn.click()
 
     # 点击注册按钮
     def click_register_btn(self):
-        self.locator_registerBtn.click()
+        with allure.step("点击注册按钮"):
+            self.locator_registerBtn.click()
 
     # 注册填写操作
     def fillRegister(self,username,password) -> None:
-        self.fill_username(username)
-        self.fill_password(password)
+        with allure.step("填写注册信息"):
+            self.fill_username(username)
+            self.fill_password(password)
 
 
