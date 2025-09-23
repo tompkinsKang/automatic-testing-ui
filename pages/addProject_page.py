@@ -43,7 +43,7 @@ class AddProjectPage:
         self.locator_submitBtn.click()
 
     # 填写添加项目信息
-    def fillAddProjcet(self,project_name,publish_app,project_desc):
+    def fillAddProject(self,project_name,publish_app,project_desc):
         self.fillProjectName(project_name)
         self.fillPublishApp(publish_app)
         self.fillProjectDesc(project_desc)

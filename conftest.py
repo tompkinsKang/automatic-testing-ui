@@ -8,7 +8,7 @@ def login_save(browser,pytestconfig):
     context = browser.new_context(base_url="http://47.116.12.183")
     page = context.new_page()
     LoginPage(page).navigate()
-    LoginPage(page).fillLogin("llh", "admin123")
+    LoginPage(page).fillLogin("py", "123456")
     LoginPage(page).click_login_btn()
     # 等待登录成功后重定向
     page.wait_for_url(url="**/index.html")

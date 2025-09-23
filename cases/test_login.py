@@ -48,7 +48,7 @@ class TestLogin:
 
     # 用例5，登陆成功
     def test_login_success(self):
-        self.login.fillLogin("llh","admin123")
+        self.login.fillLogin("py","123456")
 
         # self.login.click_login_btn()
 
@@ -65,9 +65,11 @@ class TestLogin:
             self.login.click_login_btn()
         assert res.value.status == 200
         assert res.value.ok
+        expect(self.login.page).to_have_url("/index.html")
+        expect(self.login.page).to_have_title("首页")
 
     def test_login_6(self):
-        self.login.fillLogin("llh","      ")
+        self.login.fillLogin("py","      ")
         expect(self.login.locator_passwordTips1).to_be_visible()
         expect(self.login.locator_passwordTips1).to_have_text("不能为空")
         expect(self.login.locator_loginBtn).to_be_disabled()
@@ -76,13 +78,13 @@ class TestLogin:
         "5","17","0","a"*32
     ])
     def test_login_7(self,password):
-        self.login.fillLogin("llh",password)
+        self.login.fillLogin("py",password)
         expect(self.login.locator_passwordTips2).to_be_visible()
         expect(self.login.locator_passwordTips2).to_have_text("密码6-16位字符")
         expect(self.login.locator_loginBtn).to_be_disabled()
 
     def test_login_8(self):
-        self.login.fillLogin("llh","!@#$%^&*")
+        self.login.fillLogin("py","!@#$%^&*")
         expect(self.login.locator_passwordTips3).to_be_visible()
         expect(self.login.locator_passwordTips3).to_have_text("不能有特殊字符,请用中英文数字下划线")
         expect(self.login.locator_loginBtn).to_be_disabled()
