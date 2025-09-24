@@ -1,3 +1,4 @@
+import allure
 from playwright.sync_api import Page
 
 class AddProjectPage:
@@ -24,26 +25,32 @@ class AddProjectPage:
 
     # 添加项目页导航
     def navigate(self):
-        self.page.goto("/add_project.html")
+        with allure.step("导航到添加项目页"):
+            self.page.goto("/add_project.html")
 
     # 输入项目名称
     def fillProjectName(self,project_name):
-        self.locator_project_name.fill(project_name)
+        with allure.step(f"输入项目名称:{project_name}"):
+            self.locator_project_name.fill(project_name)
 
     # 输入所属应用
     def fillPublishApp(self,publish_app):
-        self.locator_publish_app.fill(publish_app)
+        with allure.step(f"输入所属应用:{publish_app}"):
+            self.locator_publish_app.fill(publish_app)
 
     # 输入项目描述
     def fillProjectDesc(self,project_desc):
-        self.locator_project_desc.fill(project_desc)
+        with allure.step(f"输入项目描述:{project_desc}"):
+            self.locator_project_desc.fill(project_desc)
 
     # 保存按钮
     def saveButton(self):
-        self.locator_submitBtn.click()
+        with allure.step("点击保存按钮"):
+            self.locator_submitBtn.click()
 
     # 填写添加项目信息
     def fillAddProject(self,project_name,publish_app,project_desc):
-        self.fillProjectName(project_name)
-        self.fillPublishApp(publish_app)
-        self.fillProjectDesc(project_desc)
+        with allure.step("填写添加项目信息"):
+            self.fillProjectName(project_name)
+            self.fillPublishApp(publish_app)
+            self.fillProjectDesc(project_desc)

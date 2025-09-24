@@ -1,3 +1,4 @@
+import allure
 from playwright.sync_api import Page
 class ProjectList:
 
@@ -26,16 +27,19 @@ class ProjectList:
 
     # 项目列表页面导航
     def navigate(self):
-        self.page.goto("/list_project.html")
+        with allure.step("导航到项目列表页面"):
+            self.page.goto("/list_project.html")
 
     # 根据项目名称查询
     def search(self,project_name):
-        self.locator_projectname_search.fill(project_name)
-        self.locator_search_btn.click()
+        with allure.step("根据项目名称查询"):
+            self.locator_projectname_search.fill(project_name)
+            self.locator_search_btn.click()
 
     def delete(self):
-        self.locator_delete_btn.click()
-        self.locator_delete_success_confirm_btn.click()
+        with allure.step("删除第一个项目"):
+            self.locator_delete_btn.click()
+            self.locator_delete_success_confirm_btn.click()
 
 
 

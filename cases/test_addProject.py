@@ -5,6 +5,8 @@ from mocks.mock_api import mock_project_400,mock_project_500
 from pages.addProject_page import AddProjectPage
 
 class TestAddProject:
+    """添加项目测试用例"""
+
     # 添加项目用例前置与后置
     @pytest.fixture(autouse=True,scope="function")
     def start_addproject_cases(self,page,py_save):
@@ -14,51 +16,52 @@ class TestAddProject:
         yield
         print("后置")
 
-    # 异常场景1：项目名称为空
     def test_addproject_1(self):
+        """项目名称为空"""
         self.add_project.fillAddProject("","所属应用名称TEST","项目描述TEST")
         self.add_project.locator_submitBtn.click()
         expect(self.add_project.locator_projectNameTips1).to_be_visible()
         expect(self.add_project.locator_projectNameTips1).to_have_text("不能为空")
         expect(self.add_project.locator_submitBtn).to_be_disabled()
 
-    # 异常场景2：项目名称1-30
     def test_addproject_2(self):
+        """项目名称超30"""
         self.add_project.fillAddProject("a"*31,"所属应用名称TEST","项目描述TEST")
         expect(self.add_project.locator_projectNameTips2).to_be_visible()
         expect(self.add_project.locator_projectNameTips2).to_have_text("项目名称1-30位字符")
         expect(self.add_project.locator_submitBtn).to_be_disabled()
 
-    # 异常场景3：项目名称包含特殊字符
     def test_addproject_3(self):
+        """项目名称包含特殊字符"""
         self.add_project.fillAddProject("!@#$%^&*()+<>?:","所属应用名称TEST","项目描述TEST")
         expect(self.add_project.locator_projectNameTips3).to_be_visible()
         expect(self.add_project.locator_projectNameTips3).to_have_text("项目名称不能有特殊字符,请用中英文数字_")
         expect(self.add_project.locator_submitBtn).to_be_disabled()
 
-    # 异常场景4：所属应用超长 最大30
     def test_addproject_4(self):
+        """所属应用超长 最大30"""
         self.add_project.fillAddProject("项目名称TEST","a*"*31,"项目描述TEST")
         expect(self.add_project.locator_publishAppTips1).to_be_visible()
         expect(self.add_project.locator_publishAppTips1).to_have_text("最大30位字符")
         expect(self.add_project.locator_submitBtn).to_be_disabled()
 
-    # 异常场景5：所属应用特殊字符
     def test_addproject_5(self):
+        """所属应用包含特殊字符"""
         self.add_project.fillAddProject("项目名称TEST","!@#$%^&*()+<>?:","项目描述TEST")
         expect(self.add_project.locator_publishAppTips2).to_be_visible()
         expect(self.add_project.locator_publishAppTips2).to_have_text("不能有特殊字符")
         expect(self.add_project.locator_submitBtn).to_be_disabled()
 
-    # 异常场景6：项目描述超长 最大200
     def test_addproject_6(self):
+        """项目描述超200"""
         self.add_project.fillAddProject("项目名称TEST","所属应用名称TEST","a"*201)
         expect(self.add_project.locator_projectDescTips1).to_be_visible()
         expect(self.add_project.locator_projectDescTips1).to_have_text("最大200位字符")
         expect(self.add_project.locator_submitBtn).to_be_disabled()
 
-    # 正常场景, 添加项目成功,Ajax请求断言，url、title断言，断言新添加项目在列表中显示
+    # 添加项目成功,Ajax请求断言，url、title断言，断言新添加项目在列表中显示
     def test_addproject_success(self):
+        """添加项目成功"""
         new_project_name = str(uuid.uuid4())[:8]
         self.add_project.fillAddProject(new_project_name,"test","test")
         with self.add_project.page.expect_response("/api/project") as res:
@@ -71,6 +74,7 @@ class TestAddProject:
         expect(self.add_project.page.locator("//*[@id='table']/tbody/tr[1]/td[3]/a")).to_have_text(new_project_name)
 
     def test_add_project_400(self,page):
+        """添加时mock返回400响应"""
         self.add_project.fillAddProject("yoyo","a","a")
         page.route(**mock_project_400) # 返回400响应
         self.add_project.locator_submitBtn.click()
@@ -78,6 +82,7 @@ class TestAddProject:
         expect(self.add_project.page.locator(".bootbox-body")).to_contain_text("已存在")
 
     def test_add_project_500(self,page):
+        """添加时mock返回500响应"""
         self.add_project.fillAddProject("yoyo","a","a")
         page.route(**mock_project_500) # 返回500响应
         self.add_project.locator_submitBtn.click()

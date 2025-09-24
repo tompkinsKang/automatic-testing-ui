@@ -57,8 +57,6 @@ def admin_context(browser,base_url,pytestconfig,admin_save):
     yield context
     context.close()
 
-
-
 def pytest_runtest_call(item: Item):
     # 动态添加测试类的allure.feature()
     if item.parent._obj.__doc__:
