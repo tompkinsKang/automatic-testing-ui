@@ -5,9 +5,9 @@ from mocks.mock_api import mock_project_400,mock_project_500
 from pages.addProject_page import AddProjectPage
 
 class TestAddProject:
-    @pytest.fixture(autouse=True,scope="function")
     # 添加项目用例前置与后置
-    def start_addproject_cases(self,page,login_save):
+    @pytest.fixture(autouse=True,scope="function")
+    def start_addproject_cases(self,page,py_save):
         print("添加项目的function前置，传入Login_save自动登录参数")
         self.add_project = AddProjectPage(page)
         self.add_project.navigate()
@@ -68,7 +68,7 @@ class TestAddProject:
         expect(self.add_project.page).to_have_title("项目列表")
         expect(self.add_project.page).to_have_url("/list_project.html")
         # 断言项目列表中，table的第一行第三列是新添加的项目名称
-        expect(self.add_project.page.locator("//*[@id='table']/tbody/tr[1]/td[3]")).to_have_text(new_project_name)
+        expect(self.add_project.page.locator("//*[@id='table']/tbody/tr[1]/td[3]/a")).to_have_text(new_project_name)
 
     def test_add_project_400(self,page):
         self.add_project.fillAddProject("yoyo","a","a")
