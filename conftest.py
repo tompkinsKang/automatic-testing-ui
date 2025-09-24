@@ -3,6 +3,8 @@ from pages.login_page import LoginPage
 from pytest import Item
 import allure
 
+pytest_plugins = ['plugins.pytest_playwright']
+
 # 账号admin的保存登录
 @pytest.fixture(scope="session")
 def py_save(browser,base_url,pytestconfig):

@@ -17,7 +17,7 @@ class TestRegister:
 
     def test_register_1(self):
         """测试用户名为空，点注册"""
-        self.register.fillRegister("", "123456")
+        self.register.fillRegister("1", "123456")
         self.register.click_register_btn()
         expect(self.register.locator_usernameTips1).to_be_visible()
         expect(self.register.locator_usernameTips1).to_have_text("不能为空")
