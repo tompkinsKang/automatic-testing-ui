@@ -5,7 +5,7 @@ import allure
 
 pytest_plugins = ['plugins.pytest_playwright']
 
-# 账号admin的保存登录
+# 账号py的保存登录
 @pytest.fixture(scope="session")
 def py_save(browser,base_url,pytestconfig):
     print("登录py，并且保存cookies")
